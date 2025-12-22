@@ -2,14 +2,13 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.Instant;
 
 @Entity
 @Getter @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class ZoneRestorationRecord {
 
     @Id
@@ -20,8 +19,6 @@ public class ZoneRestorationRecord {
     private Zone zone;
 
     private Instant restoredAt;
-
     private Long eventId;
-
     private String notes;
 }
