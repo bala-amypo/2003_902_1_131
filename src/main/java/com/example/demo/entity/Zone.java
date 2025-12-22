@@ -2,29 +2,25 @@ package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.Instant;
 
 @Entity
 @Getter @Setter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 public class Zone {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(unique = true)
     private String zoneName;
 
-    @Column(nullable = false)
     private Integer priorityLevel;
-
     private Integer population;
 
-    @Builder.Default
     private Boolean active = true;
 
     private Instant createdAt;
@@ -33,7 +29,8 @@ public class Zone {
     @PrePersist
     void onCreate() {
         createdAt = Instant.now();
-        updatedAt = createdAt;
+        updatedAt = Instant.now();
+        if (active == null) active = true;
     }
 
     @PreUpdate
