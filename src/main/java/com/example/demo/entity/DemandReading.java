@@ -1,23 +1,34 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class DemandReading {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     @ManyToOne
     private Zone zone;
 
-    private Double demandMW;
-    private Instant recordedAt;
+    private double demandMW;
+    private LocalDateTime recordedAt;
+
+    public Zone getZone() {
+        return zone;
+    }
+
+    public void setZone(Zone zone) {
+        this.zone = zone;
+    }
+
+    public double getDemandMW() {
+        return demandMW;
+    }
+
+    public LocalDateTime getRecordedAt() {
+        return recordedAt;
+    }
 }
