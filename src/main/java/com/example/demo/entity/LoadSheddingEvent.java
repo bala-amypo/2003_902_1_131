@@ -7,13 +7,25 @@ import java.time.LocalDateTime;
 public class LoadSheddingEvent {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    // ✅ THIS FIELD WAS MISSING
+    private Long zoneId;
+
     private LocalDateTime eventStart;
+    private LocalDateTime eventEnd;
 
     public Long getId() {
         return id;
+    }
+
+    public Long getZoneId() {
+        return zoneId;
+    }
+
+    public void setZoneId(Long zoneId) {
+        this.zoneId = zoneId;
     }
 
     public LocalDateTime getEventStart() {
@@ -22,5 +34,13 @@ public class LoadSheddingEvent {
 
     public void setEventStart(LocalDateTime eventStart) {
         this.eventStart = eventStart;
+    }
+
+    public LocalDateTime getEventEnd() {
+        return eventEnd;
+    }
+
+    public void setEventEnd(LocalDateTime eventEnd) {
+        this.eventEnd = eventEnd;
     }
 }
