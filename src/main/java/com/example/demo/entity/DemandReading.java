@@ -28,7 +28,15 @@ public class DemandReading {
         return demandMW;
     }
 
+    public void setDemandMW(double demandMW) {
+        this.demandMW = demandMW;
+    }
+
     public LocalDateTime getRecordedAt() {
         return recordedAt;
+    }
+
+    public void setRecordedAt(LocalDateTime recordedAt) {
+        this.recordedAt = recordedAt;
     }
 }

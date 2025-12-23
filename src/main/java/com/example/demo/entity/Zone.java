@@ -22,12 +22,24 @@ public class Zone {
         return zoneName;
     }
 
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
+    }
+
     public int getPriorityLevel() {
         return priorityLevel;
     }
 
+    public void setPriorityLevel(int priorityLevel) {
+        this.priorityLevel = priorityLevel;
+    }
+
     public long getPopulation() {
         return population;
+    }
+
+    public void setPopulation(long population) {
+        this.population = population;
     }
 
     public boolean isActive() {
