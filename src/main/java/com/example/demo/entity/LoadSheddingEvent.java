@@ -1,26 +1,26 @@
 package com.example.demo.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
-@Getter @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 public class LoadSheddingEvent {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    private Zone zone;
+    private LocalDateTime eventStart;
 
-    private Instant eventStart;
-    private Instant eventEnd;
-    private String reason;
-    private Long triggeredByForecastId;
-    private Double expectedDemandReductionMW;
+    public Long getId() {
+        return id;
+    }
+
+    public LocalDateTime getEventStart() {
+        return eventStart;
+    }
+
+    public void setEventStart(LocalDateTime eventStart) {
+        this.eventStart = eventStart;
+    }
 }
