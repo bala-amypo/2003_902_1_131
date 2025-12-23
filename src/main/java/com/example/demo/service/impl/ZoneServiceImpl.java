@@ -25,7 +25,6 @@ public class ZoneServiceImpl implements ZoneService {
     public Zone updateZone(Long id, Zone zone) {
         Zone existingZone = zoneRepository.findById(id).orElse(null);
         if (existingZone != null) {
-            existingZone.setName(zone.getName());
             existingZone.setActive(zone.isActive());
             return zoneRepository.save(existingZone);
         }
