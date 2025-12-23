@@ -1,25 +1,28 @@
-package com.example.demo.entity;
+package com.example.demo.controller;
 
-import jakarta.persistence.*;
+import com.example.demo.entity.SupplyForecast;
+import com.example.demo.repository.SupplyForecastRepository;
+import org.springframework.web.bind.annotation.*;
 
-@Entity
-public class SupplyForecast {
+import java.util.List;
 
-    @Id
-    @GeneratedValue
-    private Long id;
+@RestController
+@RequestMapping("/supply-forecast")
+public class SupplyForecastController {
 
-    private double availableMW;
+    private final SupplyForecastRepository repository;
 
-    public Long getId() {
-        return id;
+    public SupplyForecastController(SupplyForecastRepository repository) {
+        this.repository = repository;
     }
 
-    public double getAvailableMW() {
-        return availableMW;
+    @PostMapping
+    public SupplyForecast create(@RequestBody SupplyForecast forecast) {
+        return repository.save(forecast);
     }
 
-    public void setAvailableMW(double availableMW) {
-        this.availableMW = availableMW;
+    @GetMapping
+    public List<SupplyForecast> getAll() {
+        return repository.findAll();
     }
 }
