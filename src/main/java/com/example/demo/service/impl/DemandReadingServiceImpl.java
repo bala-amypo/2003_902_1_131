@@ -1,11 +1,27 @@
 package com.example.demo.service.impl;
 
-import java.time.LocalDateTime;
 import com.example.demo.entity.DemandReading;
+import com.example.demo.repository.DemandReadingRepository;
+import com.example.demo.service.DemandReadingService;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
-public class DemandReadingServiceImpl {
+@Service
+public class DemandReadingServiceImpl implements DemandReadingService {
 
-    public void save(DemandReading r) {
-        r.setRecordedAt(LocalDateTime.now());
+    private final DemandReadingRepository repository;
+
+    public DemandReadingServiceImpl(DemandReadingRepository repository) {
+        this.repository = repository;
+    }
+
+    @Override
+    public List<DemandReading> getAllReadings() {
+        return repository.findAll();
+    }
+
+    @Override
+    public DemandReading saveReading(DemandReading reading) {
+        return repository.save(reading);
     }
 }
