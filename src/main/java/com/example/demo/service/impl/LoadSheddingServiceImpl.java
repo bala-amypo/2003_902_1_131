@@ -1,13 +1,13 @@
 package com.example.demo.service.impl;
 
-import java.time.LocalDateTime;
-import com.example.demo.entity.LoadSheddingEvent;
+import com.example.demo.service.LoadSheddingService;
+import org.springframework.stereotype.Service;
 
-public class LoadSheddingServiceImpl {
+@Service
+public class LoadSheddingServiceImpl implements LoadSheddingService {
 
-    public LoadSheddingEvent createEvent() {
-        LoadSheddingEvent event = new LoadSheddingEvent();
-        event.setEventStart(LocalDateTime.now());
-        return event;
+    @Override
+    public String applyLoadShedding(Long zoneId) {
+        return "Load shedding applied for zone " + zoneId;
     }
 }
