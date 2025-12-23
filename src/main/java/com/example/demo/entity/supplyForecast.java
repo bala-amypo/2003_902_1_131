@@ -11,7 +11,15 @@ public class SupplyForecast {
 
     private double availableMW;
 
+    public Long getId() {
+        return id;
+    }
+
     public double getAvailableMW() {
         return availableMW;
+    }
+
+    public void setAvailableMW(double availableMW) {
+        this.availableMW = availableMW;
     }
 }
