@@ -23,10 +23,10 @@ public class ZoneServiceImpl implements ZoneService {
 
     @Override
     public Zone updateZone(Long id, Zone zone) {
-        Zone existingZone = zoneRepository.findById(id).orElse(null);
-        if (existingZone != null) {
-            existingZone.setActive(zone.isActive());
-            return zoneRepository.save(existingZone);
+        Zone existing = zoneRepository.findById(id).orElse(null);
+        if (existing != null) {
+            existing.setActive(zone.isActive());
+            return zoneRepository.save(existing);
         }
         return null;
     }

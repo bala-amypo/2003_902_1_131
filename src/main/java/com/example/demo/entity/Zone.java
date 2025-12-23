@@ -6,40 +6,13 @@ import jakarta.persistence.*;
 public class Zone {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String zoneName;
-    private int priorityLevel;
-    private long population;
-    private boolean active;
+    private boolean active = true;
 
     public Long getId() {
         return id;
-    }
-
-    public String getZoneName() {
-        return zoneName;
-    }
-
-    public void setZoneName(String zoneName) {
-        this.zoneName = zoneName;
-    }
-
-    public int getPriorityLevel() {
-        return priorityLevel;
-    }
-
-    public void setPriorityLevel(int priorityLevel) {
-        this.priorityLevel = priorityLevel;
-    }
-
-    public long getPopulation() {
-        return population;
-    }
-
-    public void setPopulation(long population) {
-        this.population = population;
     }
 
     public boolean isActive() {
