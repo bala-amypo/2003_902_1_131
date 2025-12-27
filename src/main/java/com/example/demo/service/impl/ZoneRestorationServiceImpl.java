@@ -1,47 +1,55 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.entity.*;
-import com.example.demo.exception.*;
-import com.example.demo.repository.*;
+import com.example.demo.entity.LoadSheddingEvent;
+import com.example.demo.entity.ZoneRestorationRecord;
+import com.example.demo.exception.BadRequestException;
+import com.example.demo.exception.ResourceNotFoundException;
+import com.example.demo.repository.LoadSheddingEventRepository;
+import com.example.demo.repository.ZoneRepository;
+import com.example.demo.repository.ZoneRestorationRecordRepository;
 import com.example.demo.service.ZoneRestorationService;
+import org.springframework.stereotype.Service;
+
 import java.util.List;
 
+@Service
 public class ZoneRestorationServiceImpl implements ZoneRestorationService {
-
-    private final ZoneRestorationRecordRepository recordRepo;
-    private final LoadSheddingEventRepository eventRepo;
-    private final ZoneRepository zoneRepo;
-
-    public ZoneRestorationServiceImpl(
-            ZoneRestorationRecordRepository r,
-            LoadSheddingEventRepository e,
-            ZoneRepository z) {
-
-        this.recordRepo = r;
-        this.eventRepo = e;
-        this.zoneRepo = z;
+    
+    private final ZoneRestorationRecordRepository zoneRestorationRecordRepository;
+    private final LoadSheddingEventRepository loadSheddingEventRepository;
+    private final ZoneRepository zoneRepository;
+    
+    public ZoneRestorationServiceImpl(ZoneRestorationRecordRepository zoneRestorationRecordRepository,
+                                      LoadSheddingEventRepository loadSheddingEventRepository,
+                                      ZoneRepository zoneRepository) {
+        this.zoneRestorationRecordRepository = zoneRestorationRecordRepository;
+        this.loadSheddingEventRepository = loadSheddingEventRepository;
+        this.zoneRepository = zoneRepository;
     }
 
+    @Override
     public ZoneRestorationRecord restoreZone(ZoneRestorationRecord record) {
-
-        LoadSheddingEvent event = eventRepo.findById(record.getEventId())
+        LoadSheddingEvent event = loadSheddingEventRepository.findById(record.getEventId())
                 .orElseThrow(() -> new ResourceNotFoundException("Event not found"));
-
-        zoneRepo.findById(record.getZone().getId())
+        
+        zoneRepository.findById(record.getZone().getId())
                 .orElseThrow(() -> new ResourceNotFoundException("Zone not found"));
-
-        if (!record.getRestoredAt().isAfter(event.getEventStart()))
-            throw new BadRequestException("after event start");
-
-        return recordRepo.save(record);
+        
+        if (record.getRestoredAt().isBefore(event.getEventStart())) {
+            throw new BadRequestException("Restoration time must be after event start");
+        }
+        
+        return zoneRestorationRecordRepository.save(record);
     }
 
+    @Override
     public ZoneRestorationRecord getRecordById(Long id) {
-        return recordRepo.findById(id)
+        return zoneRestorationRecordRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Record not found"));
     }
 
+    @Override
     public List<ZoneRestorationRecord> getRecordsForZone(Long zoneId) {
-        return recordRepo.findByZoneIdOrderByRestoredAtDesc(zoneId);
+        return zoneRestorationRecordRepository.findByZoneIdOrderByRestoredAtDesc(zoneId);
     }
 }
