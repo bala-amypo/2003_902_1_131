@@ -1,6 +1,9 @@
 package com.example.demo.service;
 
-public interface AppUserService {
+import com.example.demo.dto.AuthResponse;
+import com.example.demo.entity.AppUser;
 
-    String getUserRole(String username);
+public interface AppUserService {
+    AppUser register(String email, String password, String role);
+    AuthResponse login(String email, String password);
 }
